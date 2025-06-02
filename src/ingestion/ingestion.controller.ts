@@ -31,7 +31,7 @@ export class IngestionController {
   @ApiResponse({ status: 201, description: 'Ingestion job created successfully' })
   @ApiResponse({ status: 404, description: 'Document not found' })
   @ApiResponse({ status: 400, description: 'Document is already being processed' })
-  create(@Body() createIngestionJobDto: CreateIngestionJobDto, @Request() req) {
+  createIngestionJob(@Body() createIngestionJobDto: CreateIngestionJobDto, @Request() req) {
     return this.ingestionService.create(createIngestionJobDto, req.user);
   }
 
@@ -40,7 +40,7 @@ export class IngestionController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all ingestion jobs (filtered by user role)' })
   @ApiResponse({ status: 200, description: 'Ingestion jobs retrieved successfully' })
-  findAll(@Request() req) {
+  findAllIngestionJobs(@Request() req) {
     return this.ingestionService.findAll(req.user);
   }
 
@@ -50,7 +50,7 @@ export class IngestionController {
   @ApiOperation({ summary: 'Get ingestion job by ID' })
   @ApiResponse({ status: 200, description: 'Ingestion job retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Ingestion job not found' })
-  findOne(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
+  findIngestionJobById(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
     return this.ingestionService.findOne(id, req.user);
   }
 
@@ -61,7 +61,7 @@ export class IngestionController {
   @ApiOperation({ summary: 'Update ingestion job (Admin only)' })
   @ApiResponse({ status: 200, description: 'Ingestion job updated successfully' })
   @ApiResponse({ status: 404, description: 'Ingestion job not found' })
-  update(
+  updateIngestionJobById(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateIngestionJobDto: UpdateIngestionJobDto,
     @Request() req,
@@ -75,7 +75,7 @@ export class IngestionController {
   @ApiOperation({ summary: 'Cancel ingestion job' })
   @ApiResponse({ status: 200, description: 'Ingestion job cancelled successfully' })
   @ApiResponse({ status: 400, description: 'Cannot cancel completed or failed job' })
-  cancel(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
+  cancelIngestionJob(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
     return this.ingestionService.cancel(id, req.user);
   }
 
@@ -86,7 +86,7 @@ export class IngestionController {
   @ApiOperation({ summary: 'Delete ingestion job (Admin only)' })
   @ApiResponse({ status: 200, description: 'Ingestion job deleted successfully' })
   @ApiResponse({ status: 404, description: 'Ingestion job not found' })
-  remove(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
+  deleteIngestionJob(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
     return this.ingestionService.remove(id, req.user);
   }
 

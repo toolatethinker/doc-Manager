@@ -40,7 +40,7 @@ export class UsersController {
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Get all users (Admin only)' })
   @ApiResponse({ status: 200, description: 'Users retrieved successfully' })
-  findAllUsers() {
+  getAllUsers() {
     return this.usersService.findAll();
   }
 
@@ -48,7 +48,7 @@ export class UsersController {
   @Get('profile')
   @ApiOperation({ summary: 'Get current user profile' })
   @ApiResponse({ status: 200, description: 'Profile retrieved successfully' })
-  getProfile(@Request() req) {
+  getUserProfile(@Request() req) {
     return this.usersService.findById(req.user.id);
   }
 
@@ -57,7 +57,7 @@ export class UsersController {
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Get user by ID (Admin only)' })
   @ApiResponse({ status: 200, description: 'User retrieved successfully' })
-  findUser(@Param('id', ParseUUIDPipe) id: string) {
+  getUserById(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.findById(id);
   }
 
@@ -73,7 +73,7 @@ export class UsersController {
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Update user by ID (Admin only)' })
   @ApiResponse({ status: 200, description: 'User updated successfully' })
-  update(
+  updateUserById(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
     @Request() req,
@@ -86,7 +86,7 @@ export class UsersController {
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'update user active status (Admin only)' })
   @ApiResponse({ status: 200, description: 'User status updated successfully' })
-  updateStatus(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
+  updateUserStatus(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
     return this.usersService.updateUserStatus(id, req.user);
   }
 
@@ -96,7 +96,7 @@ export class UsersController {
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Delete user (Admin only)' })
   @ApiResponse({ status: 200, description: 'User deleted successfully' })
-  remove(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
+  deleteUser(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
     return this.usersService.remove(id, req.user);
   }
 } 

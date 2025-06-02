@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
 import { Document, DocumentStatus } from './entities/document.entity';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
@@ -16,12 +17,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class DocumentsService {
-  private readonly uploadPath = './uploads';
+  private readonly uploadPath: string;
 
   constructor(
     @InjectRepository(Document)
     private documentsRepository: Repository<Document>,
+    private configService: ConfigService,
   ) {
+    this.uploadPath = this.configService.get<string>('UPLOAD_PATH', './uploads');
+    
     // Ensure upload directory exists
     if (!fs.existsSync(this.uploadPath)) {
       fs.mkdirSync(this.uploadPath, { recursive: true });
@@ -39,10 +43,9 @@ export class DocumentsService {
 
     const filename = `${uuidv4()}-${file.originalname}`;
     const filePath = path.join(this.uploadPath, filename);
-    // Save file to disk
+
     fs.writeFileSync(filePath, file.buffer);
 
-    console.log("\n\n\n\n Ye chala1", filePath, "\n\n\n\n");
     const document = this.documentsRepository.create({
       filename,
       originalName: file.originalname,
