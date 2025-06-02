@@ -152,19 +152,10 @@ The application will be available at:
 
 ## File Upload
 
-The API supports file uploads with configurable constraints:
-- **Maximum file size**: Configurable via `MAX_FILE_SIZE` environment variable (default: 50MB)
-- **Upload path**: Configurable via `UPLOAD_PATH` environment variable (default: ./uploads)
+The API supports file uploads with the following constraints:
+- **Maximum file size**: 50MB
 - **Supported formats**: All file types
 - **Storage**: Local filesystem
-
-### Configuration
-Set these environment variables to customize file upload behavior:
-```env
-# File Upload Configuration
-MAX_FILE_SIZE=52428800  # 50MB in bytes
-UPLOAD_PATH=./uploads   # Upload directory path
-```
 
 ### Upload Example
 ```bash
@@ -175,20 +166,6 @@ curl -X POST \
   -F 'file=@/path/to/your/document.pdf' \
   -F 'description=Important document' \
   -F 'metadata={"category":"legal","tags":["contract"]}'
-```
-
-### Error Responses
-The API provides detailed error messages for file upload issues:
-- **413 Payload Too Large**: When file exceeds the configured size limit
-- **400 Bad Request**: When no file is provided or other validation errors occur
-
-Example error response:
-```json
-{
-  "statusCode": 413,
-  "message": "File size (75MB) exceeds the maximum allowed size of 50MB",
-  "error": "Payload Too Large"
-}
 ```
 
 ## Database Schema
@@ -280,7 +257,3 @@ CMD ["npm", "run", "start:prod"]
 ## License
 
 This project is licensed under the MIT License.
-
-## Support
-
-For support and questions, please create an issue in the repository or contact the development team.
