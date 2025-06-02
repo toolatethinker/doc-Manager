@@ -217,6 +217,9 @@ npm run test
 # E2E tests
 npm run test:e2e
 
+# Performance tests
+npm run test:e2e -- --testPathPattern=performance
+
 # Test coverage
 npm run test:cov
 ```
